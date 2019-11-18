@@ -370,6 +370,7 @@
       创建分支(切换)： git checkout -b xxx						   
       创建分支(切换)： git checkout -b xxx	(参数-b表示创建)					   
 	  合并分支： git merge --no-ff xxx  注意先切换回主分支		（冲突时，修改冲突文件，在执行add，commit）
+	  创建远程分支： git push origin 本地分支:远程分支
 源码： jquery  underscore vue
 
 
