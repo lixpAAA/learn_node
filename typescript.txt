@@ -1,0 +1,11 @@
+一、 数据类型：boolean number string array tuple enum any null undefined void never
+
+
+
+
+2号没上
+
+
+
+
+

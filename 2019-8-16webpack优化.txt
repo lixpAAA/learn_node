@@ -1,0 +1,16 @@
+webpack对项目的优化：
+1. 可以开启babel缓存：  {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')],
+        exclude: /(node_modules)/,
+        options:{
+          cacheDirectory: true // 启用babel缓存
+        }
+      },
+2. 合理使用include，exclude，选择合理的打包文件
+3. 合理利用外部依赖： 
+  externals: { // 外部依赖，打包时不会被打包
+    jquery: 'jQuery',
+    lodash: 'lodash'
+  },

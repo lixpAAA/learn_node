@@ -1,0 +1,4 @@
+用float:left,如果无序列表有外边距，即有maring值，则 float：left和display: inline同时用，
+不然浏览器兼容性会出问题，IE6外边距会加倍。
+单独使用display: inline虽然可以横向显示，但无序列表的宽度和高度值将不起作用了，
+即如果li设置值将不起作用，因为display: inline是行内样式。

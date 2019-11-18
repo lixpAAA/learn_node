@@ -1,0 +1,376 @@
+1 .  元素js的做法： 命令式编程
+2 .  vuejs的做法： 声明式编程
+3 .  对于js阻塞，有两种解决方法，defer（延迟执行）和async（异步执行）。这两种方法只适合与引入式
+     的js脚本，不适合inline-script。
+        1. defer属性（<script src="" defer></script>） 
+        (这是延迟执行引入的js脚本（即脚本加载是不会导致解析停止，等到document全部解析完毕后，
+		defer-script也加载完毕后，在执行所有的defer-script加载的js代码，再触发Domcontentloaded）
+
+        2. async属性（<script src="" async></script>） 
+         (1)这是异步执行引入的js脚本文件 
+         (2)与defer的区别是async会在加载完成后就执行，但是不会影响阻塞到解析和渲染。但是还是会阻塞load事件，所以async-script会可能在DOMcontentloaded触发前或后执行，但是一定会在load事件前触发。
+4. mustache语法（{{}}）中，不仅可以直接写变量，也可以写表达式
+5. 常用绑值指令：
+    v-html：能解析含有html标签的字符串(不能含有变量，v-html将不会被模版引擎解析)
+	v-text：与mustache表达式类似，接收一个string类型的变量，会覆盖innerHtml的内容
+	v-once: 只会在初始化时加载一次
+	v-pre: 不会对变量做任何处理
+	v-cloak: 编译之前v-cloak存在，编译之后v-cloak将会被移除
+	v-bind： 动态绑定属性（简写成‘：’）
+	v-on: 简写（‘@’）
+	
+	@1. 绑定class三种形式： 1. :class='变量'
+	                        2. :class='{变量A: boolean, 变量B: boolean}'
+					        3. :class='[变量A, 变量B]'
+							4. :class='函数'
+	@2. 绑定style三种形式： 1. :style='{font-size: '12px'}' 或者 '{fontSize: '12px'}' 注意值是字符串
+					        2. :style='[变量A｛｝, 变量B｛｝]'
+							3. :style='函数'
+6. 计算属性： 需要对数据进行转化后再显示，或者将多个数据合并起来再显示	(直接拿属性名来使用)
+        computed: {  (实际上是省略了set和get方法)， 有计算缓存
+		   属性名：function() {}
+		}
+7.  computed 与 methods的区别
+8.  v-on（@）绑定的事件， 方法里不传参时，会有一个默认的event对象
+     @1.   <button @click='test'></button>
+	       test(event) {
+		      console.log(event)
+		   }
+		   
+     @2.  可以用$event的方式传入event对象   
+	 <button @click='test('abc', $event)'></button>
+	       test(name,event) {
+		      console.log(event)
+		   } 
+9.  v-on修饰符：
+      @1,  @click.stop   阻止事件冒泡
+	   @1,  @click.prevent   阻止默认事件
+	   @1， @click.once   只触发一次
+	   @1， @click.native  作用组件根节点
+	   @2， @keyUp绑定键盘按钮事件   @3. keyUp.enter监听回车事件
+	   
+	   
+10.  arr[10] = 10 这种形式赋值界面不会跟着改变	
+11.  input切换保留有历史， 添加key就没有了
+12.  v-if 每次切换都需重新创建节点
+     v-show 当前节点还存在，只是添加了一个样式display：none， 适用切换频率高的场景
+13.  v-for 既可遍历对象（value， key，index），也可遍历数组（value， index）
+     有key可以提高插入效率
+14.  radio  name属性（相同）可以实现互斥   v-model（相同）也可实现互斥）也可实现互斥
+15.   checkbox实现多选，v-model绑定相同的变量
+16.   v-model修饰符
+      @1.  .lazy  数据失去焦点在更新
+	  @2.  .number
+	  @3.  .trim
+17.  const myComponent = Vue.extend({}) Vue.component('自定义名称'，myComponent)
+     也可写成 Vue.component('自定义名称'，｛｝)
+	  也就是说局部注册时可以 components: {
+	      '自定义名称'，｛template: ''｝,
+		   data(){}// 这里定义组件变量
+	  }
+	  
+18.  @1 组件模版引入可以用<script type='text/x-template' id='abc'></script>	 注册用Vue.component('自定义名称'，｛template： '#abc'｝) 
+     @2 使用<template id='abc'></template>
+19.  父给子传值，props：｛
+                       type:,  // 可以自定义类型（比如自己定义一个类：person）
+					   default:,// 数组或对象需传入函数
+					   required: ture(传值必填)	，
+					   validator: // 验证函数
+					   ｝(可以限定默认值和类型)或 props:[]
+20.  子传父，通过￥emit（）
+21.   父组件可以利用$children直接访问子组件，$children是个数组
+      也可以用$refs  
+22.  子组件可以利用$parent直接访问父组件   $root直接访问vue实例
+23.   插槽的用法：组件内使用<slot><button></button></slot>    插槽内默认有一个按钮
+                 调用<myComponent><a></a></myComponent> 这里的<a>标签将会替换上面的按钮(<a>这个位置
+				 有多个其他任意标签的话，都会替换<slot></slot>内的内容)
+				 @1. 具名插槽 <slot name='header'><button></button></slot> 
+				     在插槽内加一个name属性，  使用时<h2 slot='header'></h2>
+				 @2. 父组件拿到子组件<slot>中的数据：
+				      子组件<slot :data='daaa'>  (说明: data并不是固定的)
+					  父组件<template slot-scope="slotdata"><h2>{{slotdata.data}}</h2></template>
+   
+24.  @1. export const APP=123 这种导出的变量是不可随意命名的
+     @2. export default App=11 这种导入时可以随意命名\
+	 @3. 同一文件只能有一个export default
+25.  @1.  webpack支持模块化，
+     @2.  gulp不支持模块化的开发，grunt/gulp的核心是Task，实现整个流程的自动化（使用场景：进行简单的合并压缩）	
+26.  @1. function test(){ demo='123' }
+     test();
+     console.log(this.demo); // 这时demo变成了全局变量，导致内存泄漏
+     @2. function test(){
+	    this.demo = 123
+	 }  	 
+      test(); console.log(this.demo); // demo在全局也能被访问到
+27.  node里可以使用process.memoryUsage（）监听js的内存占用情况
+28.  垃圾回收机制主要依赖与引用的概念 
+29.  中间层： @1.可以提供一些安全保证
+              @2. 提高网面响应性能，避免白屏
+              @3. nodejs是单线程的天生异步，基于事件驱动，非阻塞I、O，采用事件轮询机制实现并发， 适合在分布式设备运行数据密集的实时运用				  
+30.   // css-loader只负责加载css文件，不负责将css添加到dom中， 而style-loader负责将css添加到dom中
+       ｛test：/\.css$/,  // 这里是正则表达式， 而不是字符串
+	     use: ['style-loader', 'css-loader'] // 加载顺序从右到左
+	   ｝	  
+31.  webpack主要用来处理js文件，以及文件之间的依赖关系 
+32.  url-loader 功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL。
+33.  HtmlWebpckPlugin 用于将index.html打包进dist：
+      @1. 自动生成一个index.html文件（可以指定模版来生成）
+	  @2.  将打包的js文件，自动通过script标签插入body中
+34.  js压缩插件uglifyjs-webpack-plugin
+35.  vue-cli2: 初始化项目命令：  vue init webpack '项目名'
+     vue-cli3: 初始化项目命令：  vue create '项目名'
+	    @！！！既可使用脚手架2，又可使用脚手架3： @1， npm install @vue/cli-init 
+		 
+		 
+36.  vue渲染步骤： template->ast(抽象语法树)->render->vdom->GUI		                                         @2,  npm install @vue/cli-init
+37.  render：h=> h(App)  h函数(createElement):  h('div', 
+                                                  {class: 'div1'},
+												  ['test',h('a', ['a标签'])
+                                                ]) 
+       @1. 参数：元素节点名字，元素属性， 元素内容包括子节点
+       @2. 参数还可以传入一个组件对象
+38.   vue ui : vue界面管理
+39.   runtime+complier和runtime-only （runtime-only 更为轻量）
+40.    vue-cli3的webpack配置：在@vue cli-server下
+       想改配置的话： 在项目根目录创建vue.config.js添加你的配置，最后会与默认的webpack配置合并	
+41.  箭头函数的作用域：向父级作用域一层层查找	   
+     例： const obj = ｛
+	        aaa（）｛
+			   setTimeout（（）=>{
+			     this///  obj
+			   }）
+			   setTimeout（function(){
+			       this///  window
+				   setTimeout（（）=>{
+			           this///  window
+			       }）
+			   }） 
+			
+			｝
+	 
+	     ｝
+42.  两种改变url，却不引起页面刷新的方式： @1. 通过改变hash： location.hash=''
+                                          @2. 采用h5中的history模式： history.pushState({},'','aaa')	
+                                               此方法只会导致地址栏有反应，并不会跳转到新的页面
+                                                history.replace
+                                                history.back()  history.go()	history.forward()											
+43.  使用vue-router的步骤： @1. 安装插件： vue.use()
+                            @2. 使用并导出
+44.  vue.use(): 参数可以为一个函数，也可以为一个对象，
+                 @1. 为方法时： vue.use(function(vue){})  // 回调参数为vue实例	
+                 @2. 为对象时： vue.use({
+				                  install: function(vue, options){
+								     vue.mixin({
+									   create(){
+									     import('vuex的文件路径/'+ this.$option.name).then((res)=>{
+										     this.$store.registerModule(this.$option.name,res) /// 动态引入vuex，可以减少
+											  // 打包后的文件体积 
+										 })
+									   },
+									   methods: { 
+									   } 
+									 })  
+								  }  // 回调参数为vue实例
+				                })				 
+45.  import本身是基于promise的，所以可以import(/*webpackChunkName：'packageName'*/ 'a.js').then(()=>{})
+       @1. 注释参数可以指定分开打包的文件名字
+	   @2. 参数只能是字符串
+46.  require.ensure([], function(){}) // 45.46 都需要在webpack的支持下   
+47.  动态路由： 路由传参path: '/test/:aaa'   this.$route.param.aaa
+48.  路由懒加载： component: ()=> import('')  // 可以减少打包后主文件的体积, 路由按需加载
+49.  我们可以通过加法运算符+将一个string类型的变量转回为number 类型的。 +'5' // 转化为数字5
+                                                                      ~~'15' // 转化数字15
+	 ~运算符：先当于-n-1  例如：~-16 = -（-16）-1 = 15	~~'15' = 15
+50.  幂运算符**： 2**3 = 8
+51.  快速float转integer： console.log(20.1 | 0) => 20  //  截去小数点后面的数
+52.  路由三种模式：hash , history, abstract
+      @1. hash: location.hash
+	  @2. history: history.pushState history.popState(只是进行一个路由的压栈和出栈) llocation.pathname
+53.   在vue中路由变化：  hash模式中监听的是onhashchange事件
+                        history模式中监听的是onpopstate
+54.   两种模式比较：一般的需求场景中，hash模式与history模式是差不多的，根据MDN的介绍，
+      调用history.pushState()相比于直接修改hash主要有以下优势：
+        @1.pushState设置的新url可以是与当前url同源的任意url,而hash只可修改#后面的部分，
+		   故只可设置与当前同文档的url
+        @2.pushState设置的新url可以与当前url一模一样，这样也会把记录添加到栈中，
+		   而hash设置的新值必须与原来不一样才会触发记录添加到栈中
+        @3.pushState通过stateObject可以添加任意类型的数据记录中，而hash只可添加短字符串
+        @4.pushState可额外设置title属性供后续使用	
+55.  wacth函数的优化写法： wacth：｛
+                              value: {
+							     handler: function(){},
+								 immediate: true, // 初始加载时，handler会被执行一次	
+								 deep: true // 开启对象内属性的深度监听
+							  }
+						   ｝		
+56.  用render函数写组件
+57.  require.context('./', false, /\.vue$/)
+58.  vue集成了webpack语法， 可以直接用webpack语法	
+59.  动态路由加载：  const routerList = []
+                    function importAll(k){
+					  k.keys().forEach(key => routerList.push(k (key).default)
+					}
+					importAll(require.context('.', true, /\.vue$/)) 第二个参数为是否解析子目录
+					
+60.  全局导航守卫：@1 前置导航守卫 router.beforeEach((to, from, next)=> {})	
+              	   @2 后置导航守卫  router.afterEach((to, from)=> {})
+     路由独享守卫：beforeEnter: (to, from, next)=> {}
+                   afterLeave: (to, from)=> {}	 
+	 组件内守卫：  beforeRouteEnter(to, from, next)			   
+	               beforeRouteUpdate(to, from, next)			   
+	               beforeRouteLeave(to, from, next)	
+61.  vue的生命周期钩子：
+    'beforeCreate',
+    'created',
+    'beforeMount',
+    'mounted',
+    'beforeUpdate',
+    'updated',
+    'beforeDestroy',
+    'destroyed',
+    'activated',  //  使用了keep-alive才有效
+    'deactivated',
+    'errorCaptured',
+    'serverPrefetch'
+
+62.  如果keep-alive解决不了首页多路由保持之前状态，可以  结合activated和beforeRouteLeave
+	 keep-alive  还有两个属性： exclude	include组件属性名字（限定组件是否标记为活跃状态）
+63.  commonjs与amd
+      @1 commonjs是同步的， 主要在服务端 
+	      1.  内置对象 module exports require 
+	  @2 requirejs是异步的， 可以并行加载多个文件, 依赖前置  define(['a.js', 'b.js'], function(a，b	) { 逻辑 return nnn})
+	      通过return暴露给外部
+64.  eval函数是用来处理字符串，并执行处理后的字符串代码		  
+65.  require不能直接给一个变量，最好是字符串拼接一个变量
+
+66.   在dom里面直接引用资源文件的简写，要用~ , 例如： <img :src="~assets/img/a.png" :alt="图片"/>
+67.   new Promise((resolve, reject)=> {}).then(res=>{},err=>{})
+      new Promise((resolve, reject)=> {}).then( res=>return Promise.resolve(res))
+      new Promise((resolve, reject)=> {}).then(res=>return res)// 默认会自动封装成Promise
+      Promise.all([Promise数组]).then(results) //  results是一个数组
+68.   vuex的使用：  vue.use(vuex); new vuex.Store({
+                                    state:{},//  单一状态树，
+       								mutations: {},// 主要用来修改同步状态，并监听，方法中默认参数state 
+									                 第二个可有参数为修改值
+       								actions: {},//	 主要用来修改异步操作，方法中默认参数为context，
+									                 调用mutations中的方法，最后使用dispatch调用更新，第二个可有参数为修改值
+       								getters: {},// 相当于计算属性，方法中默认参数state，第二个参数getters	，在modules里可以有第三个参数rootSate
+       								modules: {},//	将部分vuex抽离{aaa:｛state：｛｝，getters：｛｝｝
+                                   })	        //  取的话state.aaa,, 其实最后是进行了合并的
+69.    创建vue实例时，不要传入大写： new Vue（{ Store}) // 这种可能会获取不到$store	
+70.    对状态进行修改： 1. 在vuex中定义 @1 mutations： ｛
+                                           modifyName(state, payload){
+									         state.name = payload
+									      }
+                                        ｝
+                 						@2 	mutations： ｛
+                                           modifyName(state, payload){
+									         state.name = payload.name // 以对象方式提交的时候，这里拿到的将是一个对象
+									      }
+                                        ｝			
+                        2.  在组件内使用：@1 this.$store.commit('modifyName', 'mmmmmm');// 第二个参数为修改的传入值	
+					                      @2 this.$store.commit({
+										     type: 'modifyName',
+											 name: 'name'
+										  })	
+
+71.     减少传输的内容： 压缩、静态资源替换、合并精灵图（雪碧图）
+72.     postcss： 把css解析成JavaScript可以操作的AST， 然后调用Autoprefixer、cssnext
+73.     git版本回退： git reset --mixed 某次提交的id
+        git保存临时工作状态：git stash save ‘’
+		    恢复： git stash apply id
+			删除暂存： git rm
+74.     无法对vue实例里的data的某个对象添加属性
+75.     vue-router的工作流程： url改变-》触发监听事件-》改变router里的current变量-》监视current变量-》找到相关组件-》渲染组件
+76.     Vue.util.defineReactive() //  vue内部对数据双向绑定的一个封装      
+77.     打包npm包： vue-cli-server build --target lib --name vue-XX --dest lib src/plugins/inddex.js
+78.      @1. axios.create({baseURL: 'localhost:8081'}) 来创建不同baseUrl的axios实例，以适应不同的IP服务器
+         @2. axios.intercepters.resquest.use(config-> {
+		       return config
+		     },err=> {}) 设置全局请求拦截，也可对axios实例设置拦截 
+			axios.intercepters.response.use(res=>{return res}, err=>{})	
+79.     WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工(full-duplex)通讯的协议，连接一旦建立，就建立了真•持久性连接，双方可以随时向对方发送数据。			
+80.     @1.  if (ws.bufferedAmount == 0) ws.send(evt.data);  可以避免队首发送消息阻塞
+        @2.  WebSocket 对传输的格式没有任何限制
+		
+81.      css变量的声明： :root{ // 全局作用域
+                            --large-font-size: 20px;
+                         }
+                         p{ font-size: var(--large-font-size)}		
+82.     不支持script：<noscript>来给出不支持javascript的提示						 
+
+83.    中间件：对用户请求进行过滤或预处理的东西，一般不会对客户端进行直接响应，而是将结果传递下去，也可以理解为为实现某种功能而实现的插件
+        中间层：客户端与服务端之间加一层‘
+84.    ts中的装饰器其实就是一个方法：   function  fun(target: any) { // 装饰器已将此类传入
+                                            target.prototype.url = 'url'
+										    target.prototype.run = function () {
+											   console.log('dsada ')
+											}
+										 }
+										 @fun
+                                         class  person{
+										    contructor(){}
+			
+										 }
+										 let p：any = new person()
+										 p.run()
+85.   原型链上的属性和方法，会被多个实例共享，但构造出来的方法和属性却不会
+
+86.   == @1. 当一边有boolean值时，优先转化为数字（可以这样理解boolean属于一种特殊的int）
+         @2. 字符串和数字比较会把字符串转换成数字
+         @3. null == 0 是 false， 无法进行类型转换
+		 @4. JS 专门规定了 null == undefined 就是返回 true
+87.   Object.prototype.toString.call()  可以细分数据类型
+88.   请求状态码
+89.   webpack4，最大特性就是约定大于配置，@1 默认入口文件为src/index.js
+                                          @2 默认输出文件为dist/main.js
+                                          @3 新增mode选项，可选值为 production development										  
+		 
+90.   cookie存在与客户端，但由服务端添加
+      session存在于服务端
+	  jwt  json web token
+
+91.   118.190.159.119
+92.   {
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{
+		//  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		// IE6, IE5 浏览器执行代码
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET","/try/ajax/ajax_info.txt",true);
+	xmlhttp.send();
+}
+93.  ajax(asynchronous javascript and xml):  最大的优点是在不需要重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。
+            优点：改善用户体验，增强交互，较少宽带请求，增强兼容，支持异步
+			缺点：高度依赖JavaScript
+94.   JavaScript最大的语言特点就是单线程
+95.   WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。	 
+                浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。
+96.   响应式栅格布局： 新单位： fraction
+                       例如： .container {
+					              display: grid;
+								  grid-template-columns: 1fr 1fr 1fr; // 可用repeat（）函数改写，repeat(3, 1fr), 若想实现自适应，可用repeat(auto-fit, 1fr)
+								  grid-template-rows: 50px 50px 50px; // 
+					           }				
+				
+		 
+源码： jquery  underscore vue
+
+
+
+财务自由之路
+		
+		

@@ -1,0 +1,26 @@
+  // 调用函数
+  testCallBack({
+      value: 11,
+      success: res => {
+        console.log(res)
+      }, fail: err => {
+        console.log(err)
+      }
+    })
+
+
+
+
+
+
+
+
+
+  /// 测试
+    testCallBack ({value, success, fail}) {
+      if(value > 10) {
+        success('成功了！'+ value)
+      } else {
+        fail('失败了！')
+      }
+    },
