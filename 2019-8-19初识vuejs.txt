@@ -367,8 +367,8 @@
 					           }
 
 97.   链接git： git remote add origin xxx.xxx	
-      创建分支(切换)： git checkout -b xxx						   
-	  合并分支： git merge --no-off xxx		
+      创建分支(切换)： git checkout -b xxx	(参数-b表示创建)					   
+	  合并分支： git merge --no-ff xxx		
 		 
 源码： jquery  underscore vue
 
