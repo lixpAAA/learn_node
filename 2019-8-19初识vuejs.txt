@@ -111,7 +111,16 @@
        ｛test：/\.css$/,  // 这里是正则表达式， 而不是字符串
 	     use: ['style-loader', 'css-loader'] // 加载顺序从右到左
 	   ｝	  
-31.  webpack主要用来处理js文件，以及文件之间的依赖关系 
+31.  webpack主要用来处理js文件，以及文件之间的依赖关系 , 
+     webpack4: 1.需要webpack-cli
+               2.需要配置mode：production
+               3.默认入口文件为./src/index.js,  因此可以不配入口文件	
+               4.默认输出文件为./dist/main.js,  也可以不配出口文件
+               5.webpack-dev-server打包好的main.js托管在内存中，所以看不到，但是可以引用：<script src='./main.js'>
+                     配置参数：--open 浏览器名称 --port 端口 --host 主机地址 --hot
+			   6.html-webpack-plugin： 将把index.html生成在内存中，并自动引入main.js
+                   new HtmlWebpckPlugin({template: path.join(__dirname, './src/index.html'), filename: 'index.html'// 输出文件名称})			   
+                 			   
 32.  url-loader 功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL。
 33.  HtmlWebpckPlugin 用于将index.html打包进dist：
       @1. 自动生成一个index.html文件（可以指定模版来生成）
@@ -371,10 +380,38 @@
       创建分支(切换)： git checkout -b xxx	(参数-b表示创建)					   
 	  合并分支： git merge --no-ff xxx  注意先切换回主分支		（冲突时，修改冲突文件，在执行add，commit）
 	  创建远程分支： git push origin 本地分支:远程分支
+	  暂存本地版本： git stash
+	  重启暂存： git stash pop
+	  查看暂存：git stash list
+	  删除暂存： git stash drop 暂存名
+	  
+98.   weex：vue移动端开发框架
 源码： jquery  underscore vue
 
+99.  读取一个对象属性，本身没有就在对象原型上找，直到顶层
+100.  vue对数组的监听， 实则是把Array数组原型上的方法，加了一层拦截：  var porto = Object.create(Array.prototype)   porto['push']= function(){Array.prototype[push].apply(this, args)}
+101.  path.resolve()   1. 不带任何参数返回当前文件的绝对路径的上一级目录，（D:/A）
+                          __dirname 返回的是当前文件的绝对路径(D:/A/src)
+						  __filename 当前文件的绝对路径及全称(D:/A/src/test.js)
+					   2. path.resolve('path') =>  path.resolve() + '/path' 绝对路径
+					   3. path.resolve('path1', 'path2') 效果如上
+					   4. 参数为./ 效果如上
+                       5. 参数为/ 输出当前参数的相对路径   path.resolve('/path') => '/path'
+					   
+102.  纯函数： 相同的输入，永远都是相同的输出	多次输入[1,2,3,4,5].slice(0,3)	都会有相同的产出	
+103.  函数柯里化： 向函数传递一部分参数来调用它，让它返回一个函数去处理剩下的参数：    例如：  function（limit）{
+                                                                                                   return function(age) {
+																								        return age > limit
+																								   }
+																							   }	   
+104.  undefined也可能作为变量名，也是说var undefined = 1; console.log(undefined) => 1    这里可能存在一定的风险，
+      因此判断一个变量是否为undefined用 A === undefined是不安全的，可以用A=== void 0或者A=== void(0);	
+	
 
-
+105.  argismap:   用户名：lixpAAA
+                  online URL:  http://lixpaaa.maps.arcgis.com	
+					   
+					   
 财务自由之路
 		
 		
