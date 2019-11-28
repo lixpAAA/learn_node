@@ -49,4 +49,18 @@
     2. 难点，argis	
 	3. less语法
 	5. react学习                       
+	6. ts 
+2019/11/27
+    0. 应付流程
+    1. underscore 	
+    2. 难点，argis	
+	3. less语法
+	5. react学习                       
+	6. ts 
+2019/11/28
+    0. 攀长钢房产，新增
+    1. underscore 	
+    2. 难点，argis	
+	3. less语法
+	5. react学习                       
 	6. ts   	
