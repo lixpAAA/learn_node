@@ -44,10 +44,12 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 
 五、 http
      一、 XMLHttpRequest
-		 二、 跨域
+		 二、 跨域: CROS
+                    JSONP
 
 六、 安全
 
 七、 新技术
 
 八、 算法
+九、 项目:   鉴权、 首屏渲染、 打包优化、 发布服务
