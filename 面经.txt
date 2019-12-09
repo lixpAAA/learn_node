@@ -44,8 +44,8 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 
 五、 http
      一、 XMLHttpRequest
-		 二、 跨域: CROS
-                    JSONP
+	 二、 跨域: CROS
+                JSONP
 
 六、 安全：
        一、常见几种攻击方式：
@@ -64,6 +64,7 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 九、 项目:   鉴权、
              首屏渲染、
 			 打包优化、
+			 mock、
 			 发布服务：
 			    nginx原理
 				负载
