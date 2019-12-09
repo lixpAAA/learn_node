@@ -1,1 +1,31 @@
 1.  在react中，没有像vue那样的模版文件，一切都是以js来表现的
+2.  需下载React和ReactDOM
+3.  创建节点 React.createElement('div', 属性, 文本节点, 子节点(可无))
+4.  把虚拟节点渲染成真实节点： ReactDOM.reander('虚拟节点', document.getElementById('app'))
+5.  babel可将html代码转换为ReactDOM.reander('虚拟节点', document.getElementById('app'))这种形式
+6.  安装babel相关的包：1. cnpm i babel-core babel-loader babel-plugin-transform-runtime -D
+                        2. cnpm i babel-preset-env babel-preset-stage-0 -D
+						3. cnpm i babel-preset-react -D  // 转换jsx语法
+7.  添加.babelrc文件： {
+                         'presets': ['env', 'stage-0', 'react'],
+						 'plugins': ['transform-runtime']
+					   }
+8.  webpack配置： 	module: { // 所有第三方，配置规则
+		              rules: [
+			             {
+				           test: /\.js|jsx$/,
+				           use: 'babel-loader',
+				           exclude: /node_modules/
+			             }
+		              ]
+
+	                }	
+9.  jsx语法中给dom添加类，改为className： 例如：  <div className=''></div>  <label htmlFor=''>		
+10. 组件首字母必须大写
+11. 每个组件文件必须在开头有    import React from 'react'
+12. webpack配置： resolve:{
+                     alias: {  //文件别名
+					 '@': 'src'
+					 },
+					 extensions:['.js', '.jsx'] //  文件扩展名
+				  }			

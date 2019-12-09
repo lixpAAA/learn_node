@@ -47,9 +47,26 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 		 二、 跨域: CROS
                     JSONP
 
-六、 安全
+六、 安全：
+       一、常见几种攻击方式：
+	       1. SQL注入：  'select * from user where id='当浏览器传一个id为true时，这就会查询所有
+		   2. XSS：  XSS 全称是跨站脚本攻击。通过代码注入的方式来达到攻击的目的。例如： 输入这样的文本<script>alert(1)</script>, 有的浏览器会自动执行
+		         有两种方式可以防御：
+                 1. 字符转译
+                 2. CSP(Content Security Policy)：  设置 HTTP Header 中的 Content-Security-Policy
+		   3. CSRF： CSRF  全称是跨站请求伪造( Cross Site Request Forgery)
+		   4. 点击劫持
+		   5. 中间人劫持
 
 七、 新技术
 
 八、 算法
-九、 项目:   鉴权、 首屏渲染、 打包优化、 发布服务
+九、 项目:   鉴权、
+             首屏渲染、
+			 打包优化、
+			 发布服务：
+			    nginx原理
+				负载
+				安全
+				跨域
+十、 axios源码、vue-router、 vuex

@@ -410,7 +410,42 @@
 
 105.  argismap:   用户名：lixpAAA
                   online URL:  http://lixpaaa.maps.arcgis.com	
-					   
+106.  arcgis-cli: 1. npm install npm install -g @arcgis/cli
+                  2. arcgis create arcgis-vue-app -t vue
+				  3. 最简单的方式安装erise-loader(推荐)
+				  
+107.   1. try-catch 只能捕获到同步的运行时错误，对语法和异步错误却无能为力，捕获不到。
+       2. window.onerror事件能够捕获异步错误，1. onerror 最好写在所有 JS 脚本的前面，否则有可能捕获不到错误	
+                                              2. 不能捕获静态资源加载错误，例如：<img src="./jartto.png">	   
+       3. 两者都不能捕获语法错误
+	   4. window.addEventListener('error', function(){}) 可以捕获静态资源加载错误
+	   5. window.addEventListener("unhandledrejection", function(e){  // 可以捕获Promise漏掉的异常
+             e.preventDefault()
+             console.log('捕获到异常：', e);
+             return true;
+          });
+	   6.  在vue中，  Vue.config.errorHandler = (err, vm, info) => {
+                           console.error('通过vue errorHandler捕获的错误');
+                           console.error(err);
+                           console.error(vm);
+                           console.error(info);
+                        }
+	   7.  在react中， 	通过内置函数 componentDidCatch(error, info) {
+                                        console.log(error, info);
+									｝
+	   8.  跨源资源共享机制( CORS )：我们为 script 标签添加 crossOrigin 属性。 前端脚本： <script src="http://jartto.wang/main.js" crossorigin></script>
+           服务器端需要设置：Access-Control-Allow-Origin	
+108.  项目优化： 1.  webpack-bundle-analyzer  包分析工具
+                 2.  配置最小化chunk体积   
+				 3.  正式环境不要mapsource
+109.  1. 最新es提案之一是在类中添加私有变量的方法。我们将使用 # 符号表示类的私有变量。这样就不需要使用闭包来隐藏不想暴露给外界的私有变量。	
+      2.  使用可选链运算符，只需要使用 ?. 来访问嵌套对象。不用层层用逻辑与（&&）  将a.a&&a.a.b&&a.a.b.c改为a?.a?.b?.c	
+	  3.  空位合并运算符？？  避免const y= x||100 当x为0或false的时候也给y赋值，  改为 const y=x??500
+      4. 我们可以用 BigInt 对象表示大于2^53 -1 的整数, 它可以由数字和十六进制或二进制字符串构造。
+
+
+
+	  
 					   
 财务自由之路
 		

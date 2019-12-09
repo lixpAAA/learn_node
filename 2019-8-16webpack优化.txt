@@ -14,3 +14,6 @@ webpack对项目的优化：
     jquery: 'jQuery',
     lodash: 'lodash'
   },
+4. webpack-bundle-analyzer  包分析工具
+                 2.  配置最小化chunk体积   
+				 3.  正式环境不要mapsource
