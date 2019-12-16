@@ -17,3 +17,38 @@ webpack对项目的优化：
 4. webpack-bundle-analyzer  包分析工具
                  2.  配置最小化chunk体积   
 				 3.  正式环境不要mapsource
+				 
+				 
+				 
+111.  new webpack.ProvidePlugin({$: 'jquery'})  //   全局引入插件  这样在js文件中就不必再次引入， console.log($),   可以对第三方插件进行统一管理
+30.   // css-loader只负责加载css文件，不负责将css添加到dom中， 而style-loader负责将css添加到dom中
+       ｛test：/\.css$/,  // 这里是正则表达式， 而不是字符串
+	     use: ['style-loader', 'css-loader'] // 加载顺序从右到左
+	   ｝	  
+31.  webpack主要用来处理js文件，以及文件之间的依赖关系 , 
+     webpack4: 1.需要webpack-cli
+               2.需要配置mode：production
+               3.默认入口文件为./src/index.js,  因此可以不配入口文件	
+               4.默认输出文件为./dist/main.js,  也可以不配出口文件
+               5.webpack-dev-server打包好的main.js托管在内存中，所以看不到，但是可以引用：<script src='./main.js'>
+                     配置参数：--open 浏览器名称 --port 端口 --host 主机地址 --hot
+			   6.html-webpack-plugin： 将把index.html生成在内存中，并自动引入main.js
+                   new HtmlWebpckPlugin({template: path.join(__dirname, './src/index.html'), filename: 'index.html'// 输出文件名称})	
+5.  loader 的本质是一个fuction(context){}	:  链接：https://study.163.com/course/courseLearn.htm?courseId=1209595819#/learn/live?lessonId=1279998673&courseId=1209595819
+6.  plugin 的本质是一个对象：里面有个apply方法：    module.exports = a;
+                                                    function a {};
+                                                    a.prototype.apply = function(compiler) {
+													    compiler.hooks.done.tap('changStatic', function(compilation){ // 打包完成生成dist目录后执行
+														
+														})
+													}	
+7.  element组件动态引入，	"plugins": [
+                                [
+                                  "component",
+                                  {
+                                    "libraryName": "element-ui",
+                                    "styleLibraryName": "theme-chalk"
+                                  }
+                                ],
+                                "syntax-dynamic-import"  // 不引入这个可能会报错
+                             ]											

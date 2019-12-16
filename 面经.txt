@@ -47,16 +47,41 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 	 二、 跨域: CROS
                 JSONP
 
-六、 安全：
+六、 安全：https://mp.weixin.qq.com/s/mI859obHtYoj9OH9jS780g
        一、常见几种攻击方式：
 	       1. SQL注入：  'select * from user where id='当浏览器传一个id为true时，这就会查询所有
 		   2. XSS：  XSS 全称是跨站脚本攻击。通过代码注入的方式来达到攻击的目的。例如： 输入这样的文本<script>alert(1)</script>, 有的浏览器会自动执行
 		         有两种方式可以防御：
                  1. 字符转译
                  2. CSP(Content Security Policy)：  设置 HTTP Header 中的 Content-Security-Policy
-		   3. CSRF： CSRF  全称是跨站请求伪造( Cross Site Request Forgery)
-		   4. 点击劫持
-		   5. 中间人劫持
+		   3. CSRF： CSRF  全称是跨站请求伪造( Cross Site Request Forgery)，本质上， 说白了就是借用用户的身份或权限偷偷的完成某些操作。
+                     CSRF 的发生其实是借助了 cookie 的特性。
+					 我们登录了某个 http://tao.com 购物网站之后，cookie 就会有登录过的标记了。此时请求http://tao.com/pay?id=123&money=1000，
+					 是会带着 cookie 的，server 端就知道已经登录了。如果在http://tao.com去请求其他域名的 API ,  例如http://tx.com/api时，
+					 是不会带 cookie 的，这是浏览器同源策略的限制。但是此时在其他域名的页面中，请求http://tao.com/pay?id=123&money=1000，
+					 就会带着tao.com的 cookie 。这是发生 CSRF 攻击的理论基础。
+					 	 防御： 防御CSRF 有效的手段就是加入各个层级的权限验证.
+                            例如现在的购物网站，只要涉及现金交易，肯定要输入密码或者扫码验证才行。
+                            除此之外，敏感的接口要使用POST请求而不是GET.
+
+		   4. 点击劫持： 也被称为UI-覆盖攻击，攻击方式就是在某些操作的按钮上加一层透明的iframe。
+		           防御方法： 1. 使用 HTTP 头防御
+				                    通过配置 nginx 发送 X-Frame-Options 响应头，这个 HTTP 响应头 就是为了防御用 iframe 嵌套的点击劫持攻击。
+									这样浏览器就会阻止嵌入网页的渲染。该响应头有三个值可选，分别是：
+									                                                        DENY，表示页面不允许通过 iframe 的方式展示。
+																							SAMEORIGIN，表示页面可以在相同域名下通过 iframe 的方式展示。
+							  2. 使用 Javascript 防御
+							        判断顶层视口的域名是不是和本页面的域名一致，如果不一致就让恶意网页自动跳转到我方的网页。																ALLOW-FROM，表示页面可以在指定来源的 iframe 中展示。
+    
+		   5. 中间人劫持：中间人攻击（Man-in-the-Middle Attack, MITM）
+		                  简而言之，所谓的MITM攻击就是通过拦截正常的网络通信数据，并进行数据篡改和嗅探来达到攻击的目的，而通信的双方却毫不知情。
+						  建议： 
+                          以下是针对防止中间人攻击的一些建议：
+                             确保当前你所访问的网站使用了HTTPS
+                             如果你是一个网站管理员，你应当执行HSTS协议
+                             不要在公共Wi-Fi上发送敏感数据
+                             如果你的网站使用了SSL，确保你禁用了不安全的SSL/TLS协议。
+                             不要点击恶意链接或电子邮件。
 
 七、 新技术
 
@@ -64,6 +89,34 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 九、 项目:   鉴权、
              首屏渲染、
 			 打包优化、
+			   1. webpack配置
+			   2. dll优化： 先对loadsh、jquery这些不会改变的代码进行webpack打包处理，然后再对其他文件进行打包处理
+			             1. dll单独配置（webpack.dll.js）：  import webpack from 'webpack'
+                                                             module.exports = {
+                                                               entry: {
+                                                                 vendor: ['loadsh']
+                                                               },
+                                                               output: {
+                                                                 path: __dirname + '/dll',
+                                                                 filename: '[name].dll.js',
+                                                                 library: '[name]_library'
+                                                               },
+                                                               plugins: [
+                                                                 new webpack.DllPlugin({
+                                                                   path: __dirname + '/dll/[name]-manifest.json',
+                                                                   name: '[name]_library'
+                                                                 })
+                                                               ]
+															   }
+                          2. webpack配置：plugins: [
+						     new webpack.DllReferencePlugin({
+                                 manifest: require('../dll/vendor-manifest.json')
+                           })
+						  ]  
+                         3. 在打包后的文件中手动引入 主页面index.html
+                         4. 其他文件，正常引入，并使用						 
+													  
+			   
 			 mock、
 			 发布服务：
 			    nginx原理
@@ -71,4 +124,15 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 				安全
 				跨域
               问题1: 避免表单重复提交，或按钮重复点击：  1.  设置变量，带请求结束后，更新变量。 2. 自定义指令 3. 重写组件，事情变得麻烦，不可取     
+			防止重复提交： （自定义指令）
+                       Vue.directive("btn-control", {
+                           // 插入dom 时做的事情
+                           inserted: function(el, bind) {
+                               el.addEventListener("click", () => {
+                                   el.disabled = true;
+                                   bind.value().then(res => {
+                                       el.disabled = false;
+                                   });
+                               });
+                           }	
 十、 axios源码、vue-router、 vuex

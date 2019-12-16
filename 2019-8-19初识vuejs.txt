@@ -107,19 +107,7 @@
 29.  中间层： @1.可以提供一些安全保证
               @2. 提高网面响应性能，避免白屏
               @3. nodejs是单线程的天生异步，基于事件驱动，非阻塞I、O，采用事件轮询机制实现并发， 适合在分布式设备运行数据密集的实时运用				  
-30.   // css-loader只负责加载css文件，不负责将css添加到dom中， 而style-loader负责将css添加到dom中
-       ｛test：/\.css$/,  // 这里是正则表达式， 而不是字符串
-	     use: ['style-loader', 'css-loader'] // 加载顺序从右到左
-	   ｝	  
-31.  webpack主要用来处理js文件，以及文件之间的依赖关系 , 
-     webpack4: 1.需要webpack-cli
-               2.需要配置mode：production
-               3.默认入口文件为./src/index.js,  因此可以不配入口文件	
-               4.默认输出文件为./dist/main.js,  也可以不配出口文件
-               5.webpack-dev-server打包好的main.js托管在内存中，所以看不到，但是可以引用：<script src='./main.js'>
-                     配置参数：--open 浏览器名称 --port 端口 --host 主机地址 --hot
-			   6.html-webpack-plugin： 将把index.html生成在内存中，并自动引入main.js
-                   new HtmlWebpckPlugin({template: path.join(__dirname, './src/index.html'), filename: 'index.html'// 输出文件名称})			   
+			   
                  			   
 32.  url-loader 功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL。
 33.  HtmlWebpckPlugin 用于将index.html打包进dist：
@@ -443,6 +431,7 @@
 	  3.  空位合并运算符？？  避免const y= x||100 当x为0或false的时候也给y赋值，  改为 const y=x??500
       4. 我们可以用 BigInt 对象表示大于2^53 -1 的整数, 它可以由数字和十六进制或二进制字符串构造。
 
+110.  Object.keys()不会遍历原型链上的东西、 for in 会遍历原型链上的东西
 
 
 	  
