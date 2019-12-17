@@ -87,7 +87,14 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 
 八、 算法
 九、 项目:   鉴权、
-             首屏渲染、
+             首屏渲染：为了seo优化和首屏渲染速度、
+			   1.  ssr(srever side render):
+			       1. 	特点： 每次访问都必须新建一个vue实例，只会触发beforeCreate和created函数， 其他就需要客户端的js
+				   2.   安装vue-server-renderer ;
+				           用法： const render = require('vue-server-render').createRenderer()
+						          render.renderToString(app /* vue 实例 */).then(html=> {
+								  
+								  })
 			 打包优化、
 			   1. webpack配置
 			   2. dll优化： 先对loadsh、jquery这些不会改变的代码进行webpack打包处理，然后再对其他文件进行打包处理
