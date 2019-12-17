@@ -121,7 +121,9 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                            })
 						  ]  
                          3. 在打包后的文件中手动引入 主页面index.html
-                         4. 其他文件，正常引入，并使用						 
+                         4. 其他文件，正常引入，并使用		
+                  3. 严格控制组件内存回收
+                  4. webworker并发渲染       				 
 													  
 			   
 			 mock、
