@@ -28,4 +28,19 @@
 					 '@': 'src'
 					 },
 					 extensions:['.js', '.jsx'] //  文件扩展名
-				  }			
+				  }		
+
+13. class声明的组件需继承 React.Component() 这里可以之直接通过 this.props使用外界传入的变量 ，只读的	  
+14. 通过function创建的组件props是只读的	  
+15. class组件内可以使用 this.state={}来存取变量    constructor() {
+                                                       super()
+                                                       this.ddd = 123
+                                                       this.state = {
+                                                         name: 'lixp',
+                                                         list: [{ id: 1, name: 'AAA' }, { id: 2, name: 'BBB' }]
+                                                       }
+                                                     }
+16. 标签内的属性需用{{}}包裹：   <p style={{color: red}}></p>
+17.  loader:'css-loader?modules' 可使类 和 id 选择器模块化
+
+
