@@ -82,11 +82,20 @@
 	2. 昨天直播
 	5. react学习                       
 	6. ts 
-2019/12/18
+2019/1/1
 	1. es6
-	2 直播
-	5. react学习45                   
+	2 模块加载器
+	5. react文档                   
 	6. ts 
+2019/1/2
+	1. es6
+	2 模块加载器
+	3. vue源码解析
+	5. react文档                   
+	6. ts 	
+	
+	
+React Native、 Weex、 Flutter	
 
 
 	

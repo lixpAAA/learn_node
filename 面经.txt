@@ -74,7 +74,64 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 			7. padStart(/*字符串总长度*/, /*指定需补的字符串*/)，padEnd()  // 字符串长度不够，自动用指定字符串补全
 			8. new RegExp(/abc/ig, 'i').flags    //  指定的修饰符‘i’, 将会覆盖以前的‘ig’
 			9.正则中可以利用lastIndex属性来指定从何处开始匹配  /a/.lastIndex
-
+			10. Number.MIN_SAFE_INTEGER检查最大安全整数（-2^53 +1）
+			11. Math.trunc()  // 用于去除一个数的小数部分，  内部会使用Number方法将其先转为数值
+			12. 指数运算符  2**3， 采用的是右结合 
+            13. 箭头函数不适宜定义在一个对象中，  还有不适宜 给一个dom对象添加监听函数的回调中
+            14. 函数参数可以有默认值
+            15. 用扩展运算符合并数组时，是一种浅拷贝，使用时需注意.  用扩展运算符...和concat复制数组却不会(如果数组里有对象，也只是浅拷贝)	
+			16. Array.from方法把类数组（Set也可）对象和可遍历对象， 可以有第二个参数，相当于map
+            17. Array.of方法用于将一组值，转换为数组。Array.of(3, 11, 8) // [3,11,8]    new Array(3).fill(7) // [7,7,7]
+			18. Array.prototype.flat()用于将嵌套的数组“拉平”
+			19. Object.getOwnPropertyNames(obj)  // 获取自身所有属性，（不包含symbol,但包含不可枚举属性）
+			20. Reflect.ownKeys(obj) // 获取自身所有属性，（包含symbol,包含不可枚举属性）
+			21. Object.assign({}, a);上面的例子只是拷贝了对象实例的属性，如果想完整克隆一个对象，还拷贝对象原型的属性，可以采用下面的写法。
+                        // 写法一
+                        const clone1 = {
+                          __proto__: Object.getPrototypeOf(obj),
+                          ...obj
+                        };
+                        
+                        // 写法二
+                        const clone2 = Object.assign(
+                          Object.create(Object.getPrototypeOf(obj)),
+                          obj
+                        );
+                        
+                        // 写法三
+                        const clone3 = Object.create(
+                          Object.getPrototypeOf(obj),
+                          Object.getOwnPropertyDescriptors(obj)
+                        )
+			22. Object.is(NaN, NaN) => true  // 可以判断两个对象是否相等, Object.is(+0, -0) // false   +0 === -0 // ture
+                let obj = {a: 1};
+                Object.assign(obj, undefined) === obj // true   // null和undefined为第一个参数的话则会报错
+                Object.assign(obj, null) === obj // true
+                Object.assign拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。
+				             属性名为 Symbol 值的属性，也会被Object.assign拷贝。是一种浅拷贝，只能对一些简单对象进行拷贝，对象里面有对象，得到的只是里面对象的应用
+                使用for...in循环和Object.getOwnPropertyNames()方法都得不到 Symbol 键名，需要使用Object.getOwnPropertySymbols()方法。
+            23. Reflect.ownKeys()方法可以返回所有类型的键名，包括常规键名和 Symbol 键名。
+            24.	Symbol.for("bar") === Symbol.for("bar") =》true	// 但是此方法登记的值，是全局注册的，不管在什么地方声明
+			25. Set遍历的时候键与值相等
+			26. forEach、map方法还可以有第二个参数，表示绑定处理函数内部的this对象。 [].map(function(item){console.log(this)  //  this ==> {a: 1}
+			                                                                                               }, {a: 1})
+			27. 扩展运算符（...）内部使用for...of循环，所以也可以用于 Set 结构。																						   
+			28. WeakSet 的成员只能是对象，而不能是其他类型的值。new WeakSet({})   WeakMap类似
+			29. 对象只接受字符串作为键名， 当用一个dom节点作为键名时，会被转化为‘[object HTMLDivElement]’
+			30. map的键可以为任意的类型的值， 和set 一样，当键为对象时， 键只是对象的引用地址
+			31. proxy对象： var obj = new Proxy({}, {
+                                  get: function (target, propKey, receiver) {
+                                    console.log(`getting ${propKey}!`);
+                                    return Reflect.get(target, propKey, receiver);
+                                  },
+                                  set: function (target, propKey, value, receiver) {
+                                    console.log(`setting ${propKey}!`);
+                                    return Reflect.set(target, propKey, value, receiver);
+                                  }
+                                });
+			
+			
+			         
 四、 vue
        一、vue3.0 的响应式：  proxy 不会去污染原对象
 	         <script src="./dist/reactivity.global.js"></script>
@@ -98,11 +155,53 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 			 2. Object.frezee()  //  不可写、可枚举、不可配置
 			 3. Object.seal()    //   可写、可枚举、不可配置
 			 4. 响应式的依赖收集发生在get里， 在set里触发视图更新
-			 5. 对数组的响应式，利用装饰者模式，拷贝一份原数组方法
+			 5. 对数组的响应式，利用装饰者模式，拷贝一份原数组方法,
+			 
+	   三、 new Vue()到底做了什么？
+             1. new Vue首先调用init()方法、
+			   在init方法里会进行一系列初始化操作：
+			    initLifecycle(vm)、// 初始化$parent $root $children 建立父子组件关系，在当前实例上添加一些属性和生命周期标识
+				initEvents(vm)、initRender(vm)、callHook(vm, 'beforeCreate')
+			    initInjections(vm) // 对inject的数据进行响应式的监听
+				initState(vm)   // 初始化props methods data 
+				initProvide(vm) callHook(vm, 'create')、 最后判断option选项是否有el，如有vm.$mount(vm.$options.el)
+			 2. 会依次执行  initMixin(Vue);
+                            stateMixin(Vue);
+                            eventsMixin(Vue);
+                            lifecycleMixin(Vue);
+                            renderMixin(Vue);	
+							
+	   四、keep-alive: 参考地址：https://www.jianshu.com/p/0b0222954483
+	       1.keep-alive 是 Vue 内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染。
+	          两个属性： include - 字符串或正则表达，只有匹配的组件会被缓存、exclude - 字符串或正则表达式，任何匹配的组件都不会被缓存
+            <keep-alive>
+                <router-view>
+                <!-- 所有路径匹配到的视图组件都会被缓存！ -->
+            </router-view>
+			2. 缺点：需要知道组件的 name，项目复杂的时候不是很好的选择
+			3. <router-view v-if="!$route.meta.keepAlive">   //    router列表项加meta属性： meta: {keepAlive: true}
+                 <!-- 这里是不被缓存的视图组件，比如 Edit！ -->
+               </router-view>
+               </keep-alive>
+			4. 可以利用组件内         beforeRouteLeave(to, from, next) { //  提醒需要 ： router列表项加meta属性： meta: {keepAlive: true}
+                                            // 设置下一个路由的 meta
+                                           to.meta.keepAlive = false; // 让 A 不缓存，即刷新
+                                             next();
+                                      }
+			5. 涉及到的生命周期： activated  deactivated	
+        五、 路由模式： hash 默认浏览器  history  需要h5 history API支持  abstract nodejs环境（JavaScript运行所在的环境）
+        六、  serverPrefetch前身是 ssrPrefetch。顾名思义，这是用来处理ssr的。允许我们在渲染过程中“等待”异步数据。
+        七、 vue.observable
+   
 五、 http
      一、 XMLHttpRequest
 	 二、 跨域: CROS
                 JSONP
+	 三、 http2：
+	      1. 在http2里面，我们很容易可以看到10个甚至100个同时并存的流。创建一个新的流的代价也非常低。
+             它允许多个并发 HTTP 请求共用一个 TCP会话，而不是为每个请求单独开放连接，这样只需建立一个 TCP 连接就可以传送网页上所有资源，
+		     不仅可以减少消息交互往返的时间还可以避免创建新连接造成的延迟，使得 TCP 的效率更高。
+          2. 对于相同的数据，不必每次携带相同的头信息，如果请求中不包含首部，此时所有首部都自动使用之前请求发送的首部		  
 
 六、 安全：https://mp.weixin.qq.com/s/mI859obHtYoj9OH9jS780g
        一、常见几种攻击方式：
