@@ -11,8 +11,8 @@
          (2)与defer的区别是async会在加载完成后就执行，但是不会影响阻塞到解析和渲染。但是还是会阻塞load事件，所以async-script会可能在DOMcontentloaded触发前或后执行，但是一定会在load事件前触发。
 4. mustache语法（{{}}）中，不仅可以直接写变量，也可以写表达式
 5. 常用绑值指令：
-    v-html：能解析含有html标签的字符串(不能含有变量，v-html将不会被模版引擎解析)
-	v-text：与mustache表达式类似，接收一个string类型的变量，会覆盖innerHtml的内容
+  v-html：能解析含有html标签的字符串(不能含有变量，v-html将不会被模版引擎解析),  注意xss攻击，慎用
+	v-text：与mustache表达式类似，接收一个string类型的变量，会覆盖innerHtml的内容, 相当于{{}}
 	v-once: 只会在初始化时加载一次
 	v-pre: 不会对变量做任何处理
 	v-cloak: 编译之前v-cloak存在，编译之后v-cloak将会被移除
@@ -23,7 +23,7 @@
 	                        2. :class='{变量A: boolean, 变量B: boolean}'
 					        3. :class='[变量A, 变量B]'
 							4. :class='函数'
-	@2. 绑定style三种形式： 1. :style='{font-size: '12px'}' 或者 '{fontSize: '12px'}' 注意值是字符串
+	@2. 绑定style三种形式： 1. :style='{font-size: '12px'}' 或者 '{fontSize: '12px'}' 注意值是字符串,  也可传入一个对象变量
 					        2. :style='[变量A｛｝, 变量B｛｝]'
 							3. :style='函数'
 6. 计算属性： 需要对数据进行转化后再显示，或者将多个数据合并起来再显示	(直接拿属性名来使用)
@@ -107,8 +107,7 @@
 29.  中间层： @1.可以提供一些安全保证
               @2. 提高网面响应性能，避免白屏
               @3. nodejs是单线程的天生异步，基于事件驱动，非阻塞I、O，采用事件轮询机制实现并发， 适合在分布式设备运行数据密集的实时运用				  
-			   
-                 			   
+			             			   
 32.  url-loader 功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL。
 33.  HtmlWebpckPlugin 用于将index.html打包进dist：
       @1. 自动生成一个index.html文件（可以指定模版来生成）
@@ -117,8 +116,7 @@
 35.  vue-cli2: 初始化项目命令：  vue init webpack '项目名'
      vue-cli3: 初始化项目命令：  vue create '项目名'
 	    @！！！既可使用脚手架2，又可使用脚手架3： @1， npm install @vue/cli-init 
-		 
-		 
+	 
 36.  vue渲染步骤： template->ast(抽象语法树)->render->vdom->GUI		                                         @2,  npm install @vue/cli-init
 37.  render：h=> h(App)  h函数(createElement):  h('div', 
                                                   {class: 'div1'},
