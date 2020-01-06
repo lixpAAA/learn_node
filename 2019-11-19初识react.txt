@@ -44,6 +44,11 @@
 17.  loader:'css-loader?modules' 可使类 和 id 选择器模块化
 18.  用this.setState({}) 方法修改数据， 此方法是异步执行的， 如果想要立即拿到修改的值， 可以使用第二回调参数
        this.setState({mas: 123}, function() { console.log(this.state.mas)})
-19.  获取文本框的值： 1. 通过事件获取，  2. 通过this.refs.name 获取	   
+19.  获取文本框的值： 1. 通过事件获取，  2. 通过this.refs.name 获取	 
+20.   安装react-cli
+      1. npm i -g create-react-app 
+      2. create-react-app my-app
+21.  使用nextjs  ： 1. npm install --save react react-dom next	  
+	  
 
 

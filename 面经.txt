@@ -129,7 +129,27 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                                     return Reflect.set(target, propKey, value, receiver);
                                   }
                                 });
-			
+			32. new Promise((resolve, reject) =>{
+			       return resolve() //   这个地方没有return  后面的代码就会执行
+				   console.log()  
+			   })
+                then方法返回的是一个新的Promise实例，  resolve() 后面再抛出错误的话，抛出的错误将无效		
+                Promise,reject()执行完会返回新的promise， 但状态会变为resolved	
+                Promise.all() 当一个失败， 整个状态变为reject，  这个函数会等待所有异步操作结束
+                Promise.race()  属于抢答， 状态将会以率先结束的为准，不管是成功还是失败		
+            33. generator函数的执行必须依赖执行器才能继续执行（例如：co）
+			34. async函数返回一个 Promise 对象
+			35. 类不存在变量提升（hoist）例如： new Foo(); // ReferenceError     class Foo {}   // 即不能先声明后使用
+			36. CommonJS 模块就是对象，输入时必须查找对象属性。运行时加载”，因为只有运行时才能得到这个对象，导致完全没办法在编译时做“静态优化”。
+			    es6属于编译时加载
+				CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+                CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+
+
+				
+		二、模块化：						
+			1. js模块化编程的优点：   
+			      单一职责便于维护和复用，更好进行代码追踪、可以避免全局污染、利于多人协作分工、解决依赖问题，无需关心引用问题
 			
 			         
 四、 vue
