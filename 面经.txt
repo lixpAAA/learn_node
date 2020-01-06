@@ -153,8 +153,12 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
           如果 Generator 函数内部没有部署try...catch代码块，那么throw方法抛出的错误，将被外部try...catch代码块捕获。
           throw方法抛出的错误要被内部捕获，前提是必须至少执行过一次next方法。
           throw方法被捕获以后，会附带执行下一条yield表达式。也就是说，会附带执行一次next方法。
+<<<<<<< Updated upstream
           ，只要 Generator 函数内部部署了try...catch代码块，那么遍历器的throw方法抛出的错误，不影响下一次遍历。且没有被内部捕获，就不会再执行下去了
           Generator 函数也不能跟new命令一起用，会报错
+=======
+          ，只要 Generator 函数内部部署了try...catch代码块，那么遍历器的throw方法抛出的错误，不影响下一次遍历。
+>>>>>>> Stashed changes
 			         
 四、 vue
        一、vue3.0 的响应式：  proxy 不会去污染原对象
