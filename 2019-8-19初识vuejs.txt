@@ -117,7 +117,7 @@
      vue-cli3: 初始化项目命令：  vue create '项目名'
 	    @！！！既可使用脚手架2，又可使用脚手架3： @1， npm install @vue/cli-init 
 	 
-36.  vue渲染步骤： template->ast(抽象语法树)->render->vdom->GUI		                                         @2,  npm install @vue/cli-init
+36.  vue渲染步骤： template->ast(抽象语法树)->render->vdom->GUI		                                       
 37.  render：h=> h(App)  h函数(createElement):  h('div', 
                                                   {class: 'div1'},
 												  ['test',h('a', ['a标签'])
@@ -430,9 +430,27 @@
       4. 我们可以用 BigInt 对象表示大于2^53 -1 的整数, 它可以由数字和十六进制或二进制字符串构造。
 
 110.  Object.keys()不会遍历原型链上的东西、 for in 会遍历原型链上的东西
-
-
-	  
+111.  v-if 可以在template上使用，而v-show不行，  v-for遍历对象，item就直接为属性的值
+112.  为啥data要写成函数的形式？  写成函数的话，多次复用，每个实例都会有自己的data空间， 如果是对象的话， 每个实例的数据会在一起，相互污染
+113.  动态组件：   <component :is="srollView"></component   //is 后面的是组件的名称
+      异步组件：   Vue.component('名字', function(resolve, reject) { 
+                        setTimeout(()=> resolve(Component))           
+     				})
+114.  render函数   this.$solts.default =>　　　拿到子节点数组
+115.  在子组件中可以用$root、$parent 访问父组件的数据或方法 =》 使用深层次的组件，  但尽量不要使用， 会随意修改父组件数据，会变得难以调试
+      $refs 也可传值，但不是双向绑定的，  遇到undefined时，那是因为挂载上的真是dom还没渲染完
+116.  provide 选项允许我们指定我们想要提供给后代组件的数据/方法  例子： provide：function(){
+                                                                           return {
+																		      data1: data,
+																			  method1: method1
+																		   }
+																		 }	  
+	  然后在任何后代组件里，我们都可以使用 inject 选项来接收指定的我们想要添加在这个实例上的属性：inject: ['data', 'method1'] 
+	  注意是非响应式的
+117. mixins混入对象的钩子将在组件自身钩子之前调用。	如果存在同名，以组件的为准    全局混入Vue.mixin({})   部分混入： mixins: [minx],
+118. import ｛mapState｝ from './vux'    computed: { ...mapState('ssssss')  }   =>   得到state里数据
+119. vue中移动端滚动事件卡顿， <div v-on:scroll.passive="onScroll">...</div>    //  passive修饰符
+120. 可以通过全局 config.keyCodes 对象自定义按键修饰符别名：Vue.config.keyCodes.f1 = 112	
 					   
 财务自由之路
 		

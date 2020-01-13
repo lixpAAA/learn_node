@@ -88,9 +88,9 @@
 	5. react文档                   
 	6. ts 
 2019/1/2
-	1. es6
-	2 模块加载器
-	3. vue源码解析
+	1. flutter
+	2  复习
+	3. vue视频
 	5. react文档                   
 	6. ts 	
 	
