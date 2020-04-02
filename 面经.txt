@@ -1,23 +1,37 @@
 1.  大屏用的技术
-2.  大屏数据来源与管理
-3.  http缓存
-4.  做过的有特点的项目
-5.  遇到的问题与解决方案
-6.  前端安全相关(着重中间人劫持)
-7.  为什么跳槽
-8.  职业规划
-9.  项目开发流程
-10. 对vuex的看法
-11. vue从data改变到页面渲染的过程
-12. 介绍状态机
-13. 组件设计原则
-14. 怎么看待组件层级嵌套很多层
-15. 前端安全防范措施
-16. 对http2的了解
-17. websocket的使用场景
-18. pwa的使用
-19. 对新技术的了解
-
+    1. 布局采用百分比 + rem
+	             // 此方法可以将设计图的长度  除以100 得到rem
+				 setRootFontSize(pwidth/*设计图的宽度*/, prem /*换算的倍数，一般为100*/){
+				    var html = document.getElementsByTagName("html")[0];
+                    var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+                    html.style.fontSize = oWidth/pwidth*prem + "px";
+				 }
+	2. 图表随着屏幕变化儿变化
+        window.onresize = function(){
+            myChart.resize();
+			
+	3.  webwork: 处理大量的数据运算		
+			
+			
+			 
+	       
+1. vue的双向绑定
+2. es6
+3. 多个请求相互关联
+4。单元测试
+5. css定位
+6. yarn npm cnpm
+7. mvc和mvvm mvp
+8. 防抖与节流
+9. http怎么实现保持状态的
+10. 同源策略， 为啥要同源，解决了什么安全问题
+11. 状态码
+12. git 代码管理，是否直接提交到master分支
+13. login流程
+14. vue运行时优化
+15. vue-router
+16. http请求优化
+17. 微信里可以操作dom
 
 
 
@@ -52,7 +66,8 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                          ws = new WebSocket()
                          ws.onopen
                          ws.onmessage
-                         ws.close	  						 
+                         ws.close	 
+        6. indexdb: 每个key id 对应一张表objectStore，对数据库的操作类似于请求回调，支持事务，有点类似于sqlite 						 
      6. cookie的使用   
 
 三、 js， es6
@@ -73,7 +88,7 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 			6. '123'.repeat(2)  =>  123123
 			7. padStart(/*字符串总长度*/, /*指定需补的字符串*/)，padEnd()  // 字符串长度不够，自动用指定字符串补全
 			8. new RegExp(/abc/ig, 'i').flags    //  指定的修饰符‘i’, 将会覆盖以前的‘ig’
-			9.正则中可以利用lastIndex属性来指定从何处开始匹配  /a/.lastIndex
+			9. 正则中可以利用lastIndex属性来指定从何处开始匹配  /a/.lastIndex
 			10. Number.MIN_SAFE_INTEGER检查最大安全整数（-2^53 +1）
 			11. Math.trunc()  // 用于去除一个数的小数部分，  内部会使用Number方法将其先转为数值
 			12. 指数运算符  2**3， 采用的是右结合 
@@ -91,11 +106,16 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
              } else {
                 yield a[i];
              }
-          });
+          });30004920
           };
           for (var f of flat(arr)){
              console.log(f);
           }
+		  var arr=[[1,2],[3,4]];
+function Jw(obj){
+     return Array.prototype.concat.apply([],obj);
+}
+Jw(arr);  //  能拉平数组
 			19. Object.getOwnPropertyNames(obj)  // 获取自身所有属性，（不包含symbol,但包含不可枚举属性）
 			20. Reflect.ownKeys(obj) // 获取自身所有属性，（包含symbol,包含不可枚举属性）
 			21. Object.assign({}, a);上面的例子只是拷贝了对象实例的属性，如果想完整克隆一个对象，还拷贝对象原型的属性，可以采用下面的写法。
@@ -152,23 +172,40 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                 Promise.race()  属于抢答， 状态将会以率先结束的为准，不管是成功还是失败		
             33. generator函数的执行必须依赖执行器才能继续执行（例如：co）
 			34. async函数返回一个 Promise 对象
-			35. 类不存在变量提升（hoist）例如： new Foo(); // ReferenceError     class Foo {}   // 即不能先声明后使用
+			35. 类不存在变量提升（hoist）例如： new Foo(); // ReferenceError     class Foo {}   // 即不能后声明一个类先使用
 			36. CommonJS 模块就是对象，输入时必须查找对象属性。运行时加载”，因为只有运行时才能得到这个对象，导致完全没办法在编译时做“静态优化”。
 			    es6属于编译时加载
 				CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
                 CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。、
 			37. 一个模块可以有很多定义，但我认为：模块是一组与特定功能相关的代码。它封装了实现细节，公开了一个公共API，并与其他模块结合以构建更大的应用程序。
                 所谓模块化，就是为了实现更高级别的抽象，它将一类或多种实现封装到一个模块中，我们不必考虑模块内是怎样的依赖关系，仅仅调用它暴露出来的 API 即可。			
+      二、 原型链：
+           1. 每个构造函数都有一个原型对象prototype， 这个原型对象里面有个constructor属性，指向该原型对象的构造函数
+           2. 每个实例对象都有一个__proto__属性，该属性也指向构造函数的原型对象prototype，它是一个非标准属性，不可以用于编程，它是用于浏览器自己使用的
+           3. 构造函数的原型对象prototype与实例对象的__prototype指向同一个对象，换句话说他们是相等的
+           4. 在访问某个对象的某个属性时，会优先在自身属性上查找，没有就会沿着对象的原型链查找，找到就结束， 没有就继续，直至顶层object.prototype
+				   
 
-
-				
 		二、模块化：						
 			1. js模块化编程的优点：   
 			      单一职责便于维护和复用，更好进行代码追踪、可以避免全局污染、利于多人协作分工、解决依赖问题，无需关心引用问题
-			
+			2. AMD和cmd：
+                1、		对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。	CMD 推崇依赖就近，AMD 推崇依赖前置
+		三、 闭包的理解：
+              1. 就是一个能访问另一个函数作用域的函数， 简单的说就是一个函数嵌套在另一个函数中
+              2. 特点： 1. 一个函数在另一个函数中
+                        2. 可以访问另一个函数中的变量
+              3. 原理：利用作用域链，一个变量在本级函数中找不到，就会在它的父级作用域查找，如果找不到，就会继续直到顶级作用域
+              4. 例子： function anim () {
+			               var name = 'cat'
+                           function cat() {
+						     console.log(this.name) // 本级没有name，将向父级继续查找
+						   }						   
+						}			  
+			  5. 缺点：容易导致内存泄漏，要慎用
       32. 具有的iterator接口的对象才可以进行for of 遍历， obj = {  [Symbol.iteroter]() {   return {  next() { {done: , value: } }}}}   //   这样的话obj也能进行for of遍历了， 必须有next方法
           对数组和 Set 结构进行解构赋值时，会默认调用Symbol.iterator方法。
-      33. Generator 函数是一个普通函数，但是有两个特征。一是，function关键字与函数名之间有一个星号；二是，函数体内部使用yield表达式，定义不同的内部状态，。  
+      33. Generator 函数是一个普通函数，但是有两个特征。一是，function关键字与函数名之间有一个星号(*)；二是，函数体内部使用yield表达式，定义不同的内部状态，。  
           调用 Generator 函数返回的只是内部状态的一个指针，调用next方法才能得到里面的状态 ， 只有当调用next才会去执行yeild后面的表达式，只有调用next方法，函数才会开始执行
           yield表达式如果用在另一个表达式之中，必须放在圆括号里面。 console.log('Hello' + (yield 123)); // OK
           yield表达式用作函数参数或放在赋值表达式的右边，可以不加括号。let input = yield; // OK
@@ -180,7 +217,10 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
           ，只要 Generator 函数内部部署了try...catch代码块，那么遍历器的throw方法抛出的错误，不影响下一次遍历。
 			         
 四、 vue
+
        一、vue3.0 的响应式：  proxy 不会去污染原对象
+	         1. diff时.动静 分开标记处理
+			 2、采用函数式编程，生命周期函数以方法的形式向外暴露
 	         <script src="./dist/reactivity.global.js"></script>
              <script>
              const { reactive, effect } = VueObserver
@@ -210,7 +250,7 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 			 
 	   三、 new Vue()到底做了什么？
              1. new Vue首先调用init()方法、
-			   在init方法里会进行一系列初始化操作：
+			   在init方法里会进行一系列初始化操作： 
 			    initLifecycle(vm)、// 初始化$parent $root $children 建立父子组件关系，在当前实例上添加一些属性和生命周期标识
 				initEvents(vm)、initRender(vm)、callHook(vm, 'beforeCreate')
 			    initInjections(vm) // 对inject的数据进行响应式的监听
@@ -233,26 +273,43 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 			3. <router-view v-if="!$route.meta.keepAlive">   //    router列表项加meta属性： meta: {keepAlive: true}
                  <!-- 这里是不被缓存的视图组件，比如 Edit！ -->
                </router-view>
-               </keep-alive>
+               </keep-alive> 
 			4. 可以利用组件内         beforeRouteLeave(to, from, next) { //  提醒需要 ： router列表项加meta属性： meta: {keepAlive: true}
                                             // 设置下一个路由的 meta
                                            to.meta.keepAlive = false; // 让 A 不缓存，即刷新
                                              next();
                                       }
 			5. 涉及到的生命周期： activated  deactivated	
-        五、 路由模式： hash 默认浏览器  history  需要h5 history API支持  abstract nodejs环境（JavaScript运行所在的环境）
+        五、 路由模式： hash 默认浏览器  history  需要h5 history API支持  abstract nodejs环境（JavaScript运行所在的环境）, install方法内利用vue.mixin({beforeCreate:{})
+             在里面进行注册两个组件 RouterView、RouterLink， 并对$router、$route进行数据监听但只监听了get方法
         六、  serverPrefetch前身是 ssrPrefetch。顾名思义，这是用来处理ssr的。允许我们在渲染过程中“等待”异步数据。
         七、 vue.observable
-   
+        八、 vue 编译器原理： 
+              1.  整个过程： 模版字符串-> parse拆解各个部分(如：标签、属性)转化为AST-> optimize节点标记是否为静态节点-> generator函数产出render函数所需的字符串 -> render渲染成真实的节点
+        九、 router.beforeResolve 注册一个全局守卫。这和 router.beforeEach 类似，区别是在导航被确认之前，同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被调用。
+             1. 导航守卫的执行顺序：   beforeEach(全局) => beforeEnter(独享) => beforeRouteEnter(组件内) => beforeResolve(全局) => afterEach(全局) => 组件内生命周期
+		 
 五、 http
      一、 XMLHttpRequest
-	 二、 跨域: CROS
-                JSONP
+	 二、 跨域: CROS： 兼容IE10以上
+                JSONP：易受XSS攻击，被人劫持后可以随意返回可以执行的脚本
 	 三、 http2：
 	      1. 在http2里面，我们很容易可以看到10个甚至100个同时并存的流。创建一个新的流的代价也非常低。
              它允许多个并发 HTTP 请求共用一个 TCP会话，而不是为每个请求单独开放连接，这样只需建立一个 TCP 连接就可以传送网页上所有资源，
 		     不仅可以减少消息交互往返的时间还可以避免创建新连接造成的延迟，使得 TCP 的效率更高。
-          2. 对于相同的数据，不必每次携带相同的头信息，如果请求中不包含首部，此时所有首部都自动使用之前请求发送的首部		  
+          2. 对于相同的数据，不必每次携带相同的头信息，如果请求中不包含首部，此时所有首部都自动使用之前请求发送的首部
+     四、 http缓存：
+          1. 强制缓存，不会去管缓存规则，只要缓存里没有就回去请求服务器，优先级高于对比缓存，相应头header里加expires，不过expires是http1.0里的东西已过时，再加上
+		               过期时间容易造成时间上的误差， 所以采用cache-control
+          2. 对比缓存，不管是否存在缓存都会去请求服务器，询问缓存是否过期，是否需要返回新的数据及缓存规则，在对比缓存生效时，状态码为304，并且报文大小和请求时间大大减少。
+                       原因是，服务端在进行标识比较后，只返回header部分，通过状态码通知客户端使用缓存，不再需要将报文主体部分返回给客户端
+                        Last-Modified  /  If-Modified-Since  相应头返回Last-Modified，请求头携带这个时间放到If-Modified-Since
+                        Etag  /  If-None-Match	
+     五、 http解析：
+          1. 请求头报文：请求行： 包括请求方式、请求url （响应的话，状态码，状态文本）
+		                 请求头、
+						 请求体	 
+		  2. REST api: 同一个URL可对应多个不同的请求操作（get put post delete）				 
 
 六、 安全：https://mp.weixin.qq.com/s/mI859obHtYoj9OH9jS780g
        一、常见几种攻击方式：
@@ -266,7 +323,7 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 					 我们登录了某个 http://tao.com 购物网站之后，cookie 就会有登录过的标记了。此时请求http://tao.com/pay?id=123&money=1000，
 					 是会带着 cookie 的，server 端就知道已经登录了。如果在http://tao.com去请求其他域名的 API ,  例如http://tx.com/api时，
 					 是不会带 cookie 的，这是浏览器同源策略的限制。但是此时在其他域名的页面中，请求http://tao.com/pay?id=123&money=1000，
-					 就会带着tao.com的 cookie 。这是发生 CSRF 攻击的理论基础。
+					 就会带着tao.com的cookie 。这是发生 CSRF 攻击的理论基础。
 					 	 防御： 防御CSRF 有效的手段就是加入各个层级的权限验证.
                             例如现在的购物网站，只要涉及现金交易，肯定要输入密码或者扫码验证才行。
                             除此之外，敏感的接口要使用POST请求而不是GET.
@@ -296,6 +353,10 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
 			 3. sticky
 			 4. webp
 			 5. web bundles api 离线分发web内容
+			 6. kbone 可以让web端开发和小程序开发统一，  它实现了一个适配器，在适配层模拟了浏览器环境
+			          优点： 有自己的ui，支持大部分前端框架，保留小程序和web端特性
+                      缺点： 使用一定的性能消耗来换取web特性的全面支持
+                      建议：节点较多，采用静态模版转译，  对性能要求较高，建议采用原生开发					  
 
 八、 算法
 九、 项目:   鉴权、
@@ -320,11 +381,12 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                                    ｝									   
   			 打包优化、
 			   1. webpack配置
+			      1. module里配置noParse: 'jqury'  // 配置不需解析的依赖
 			   2. dll优化： 先对loadsh、jquery这些不会改变的代码进行webpack打包处理，然后再对其他文件进行打包处理
 			             1. dll单独配置（webpack.dll.js）：  import webpack from 'webpack'
                                                              module.exports = {
                                                                entry: {
-                                                                 vendor: ['loadsh']
+                                                                 vendor: ['loadsh']  // 也可写成loadsh：['loadsh']  这种形式
                                                                },
                                                                output: {
                                                                  path: __dirname + '/dll',
@@ -332,21 +394,32 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                                                                  library: '[name]_library'
                                                                },
                                                                plugins: [
-                                                                 new webpack.DllPlugin({
+                                                                 new webpack.DllPlugin({ // 本质是把打包后的文件向外暴露映射，方便其他模块找到
                                                                    path: __dirname + '/dll/[name]-manifest.json',
                                                                    name: '[name]_library'
                                                                  })
                                                                ]
 															   }
                           2. webpack配置：plugins: [
-						     new webpack.DllReferencePlugin({
+						     new webpack.DllReferencePlugin({ // 引入向外暴露的第三方依赖
                                  manifest: require('../dll/vendor-manifest.json')
                            })
 						  ]  
-                         3. 在打包后的文件中手动引入 主页面index.html
-                         4. 其他文件，正常引入，并使用		
+                         3. 在打包后的文件中手动引[name].dll.js到主页面index.html,  也可利用在script标签里添加src='${htmlWebpackPlugin.options.dllpath}'
+                         4. 其他文件，正常引入，并使用
+						 
+                  3. 开启多线程Happypack渲染， 注意项目小就没有必要了，开启线程可能会增加打包时间
+                  4. include exclude  和 ignorePlugin 插件能够忽略模块的某些依赖				  
                   3. 严格控制组件内存回收
-                  4. webworker并发渲染       				 
+                  4. webworker并发渲染
+                  5. 解决vue中img显示不出来的问题：
+                             1. 将图片资源放在放在src下，原因是src下的文件会经过编译处理
+							 2. 利用html-loader设
+							 3. 利用模版引擎，  ${require('img/aaa.jpg ')}
+				  6.postcss能把所有的css背景图生成雪碧图，且修改css，  webpackspritesmith可以指定图片生成雪碧图，且不会修改css
+                  7. 长缓存优化：app.js(业务部分)  vender.js(第三方依赖) manifest.js(webpack执行代码)
+                                1. 将output的hash改为chunkhash
+                                2. 添加两个插件：namedchunksplugin 和 namedmodulessplugin								
 													  
 			   
 			 mock、
@@ -366,5 +439,72 @@ https://www.cnblogs.com/DCL1314/p/7903102.html html
                                        el.disabled = false;
                                    });
                                });
-                           }	
+                           }
+            （1）、 手机app
+                    1）. fixed ios端不兼容：
+                         1. 采用绝对定位 
+                    2）. 1px像素问题：
+                         1. 利用伪类
+                    3）. 打包时间
+					     1. devtool: false; //  关掉sourceMap
+						 2. loader里合理使用include exclude
+						 3. 一些不经常改动的文件使用提前预打包 dll
+                    4）. 合并另一项目，作为本项目的一个小模块：
+					        通过vue插件的方式，实现模块的合并
+							export default {
+                                 name: 'aqi',
+                                 install (Vue, { router, store }) {
+                                   router.addRoutes(routes) // 1.  合并路由
+                                   store.registerModule('aqi', storeModule) // 合并vuex模块
+                                 }
+                            }
+                           					
 十、 axios源码、vue-router、 vuex
+     1、axios源码：
+	    1. 特点：内部使用的是promise封装、支持请求响应拦截、浏览器及node端皆可使用、支持请求取消、支持批量的请求发送
+		2. 拦截器可以添加多个：axios.interceptors.request.use(config=>return config,err=>return Promise.reject(err)) // 回调函数是成对儿的
+		                       axios.interceptors.response.use(response=>return response,err=>return Promise.reject(err))
+		   1. 请求拦截器，后添加的先执行(栈)，内部调用的unshift。 响应拦截器，先加先执行(队列)，内部调用的push
+		   2. 请求中断是个异步操作，也就是回调不会立即执行
+		3. axios与Axios的区别：
+           1. 从使用语法上来说，axios并不是Axios的实例，因为它是一个函数
+           2. axios具有Axios原型对象上的所有方法，有Axios对象上的所有属性
+           3. axios本质上是使用定义bind()函数调用Axios.prototype.request，进一步本质是调用的是new Axios().request()	
+           4. axios内部其实就是一个promise链：  请求拦截器-》请求-》响应拦截器-》外部回调	
+     2、vuex：
+           1. 为啥修改state不直接修改，而要用mutations中专一下？
+               1. 方便工具调试、 2. 便于管理，方便错误追踪 3. 更加灵活，可以做一些事件监听
+           2. vuex的本质是：就是一个隐藏的vue组件，state本质是定义在vm的data中的（store.state === vm.$data.$$state），只是这个组件没得template。			   
+十一、 REACT
+十二、简历问答：
+      1、cordova工作原理
+	     浏览器平台：使用h5的新特性，例如，拍照功能就是利用video和canvas实现的
+		 Android平台：
+		            其实就是WebApp运行在WebView中,Cordova的WebView类似于android官方提供的WebView,只不过可以响应网页的事件请求,
+					以及将对硬件的事件监听等传递给webApp。也就是webapp放在本地或者远端都可， 此项目采用放在本地， 避免无网络时出现网络错误页面或者有一段白屏
+					避免chrome安全策略，远端文件无权读取本地文件
+	  2、apk的发布与签名
+	  3、nginx安全策略：
+	  4、vux需要专门的vux-loader	
+	  
+	  
+	  
+	  
+	  修改element部分组件、监控视频、打包dll、argis
+	  1、element组件修改：
+	      1、 直接修改node_modules中的文件不起作用，原因我们导入的文件的入口文件在lib文件夹下，也就是在打包后的文件下。因此直接修改packages或src是不起作用的
+		  2、 下载源码，修改你要修改的组件，然后打包
+		  3、  引入打包后的文件
+	  2、echart：
+          1、echart优化：
+               1. 对于Canvas 更适合绘制图形元素数量非常大（这一般是由数据量大导致）的图表
+               2. SVG 具有重要的优势：它的内存占用更低（这对移动端尤其重要）、渲染性能略高、并且用户使用浏览器内置的缩放功能时不会模糊	
+
+
+
+
+
+经理，我想离职了，首先还是要感谢公司自入司以来对我的信任和关照，给予了我一个发展的平台及提升自我的机会，使我有了长足的进步。其次说下离职原因，自入司以来，外派到
+攀枝花已有半年多了，第一，我是作为前端工程师被招进来的，然而到甲方那里却不是有关开发的活，这种情况我也反应过很多次了，最终不了了之。第二，我还是想回成都发展了，
+成都近方便回家。现正式向公司提出辞职申请，请公司做好相应的安排，这边甲方，我也会通知，请他们与我做好工作交接。 对此对公司带来的不便， 我深表歉意。 最后希望公司
+越来越好，也希望公司在4月底之前给予批复。谢谢。
