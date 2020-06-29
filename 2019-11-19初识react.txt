@@ -1,4 +1,4 @@
-1.  在react中，没有像vue那样的模版文件，一切都是以js来表现的
+﻿1.  在react中，没有像vue那样的模版文件，一切都是以js来表现的
 2.  需下载React和ReactDOM
 3.  创建节点 React.createElement('div', 属性, 文本节点, 子节点(可无))
 4.  把虚拟节点渲染成真实节点： ReactDOM.reander('虚拟节点', document.getElementById('app'))
@@ -48,9 +48,17 @@
 20.   安装react-cli
       1. npm i -g create-react-app 
       2. create-react-app my-app
-21.  使用nextjs  ： 1. npm install --save react react-dom next
 
-22.  生命周期 
-	  
+21.  使用nextjs  ： 1. npm install --save react react-dom next	
+22.  生命周期：  componentWillMount： 组件渲染前调用，  在客户端， 也在服务端
+                 componentDidMount : 在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。	 
+	             componentWillReceiveProps 在组件接收到一个新的 prop (更新后)时被调用。这个方法在初始化render时不会被调用。
+                 shouldComponentUpdate 返回一个布尔值。在组件接收到新的props或者state时被调用。在初始化时或者使用forceUpdate时不被调用。 
+                                       可以在你确认不需要更新组件时使用。
+				 componentWillUpdate在组件接收到新的props或者state但还没有render时被调用。在初始化时不会被调用。
+                 componentDidUpdate 在组件完成更新后立即调用。在初始化时不会被调用。
+				 componentWillUnmount在组件从 DOM 中移除之前立刻被调用
+23.  组件间的通信：
+      1. 不建议父组件给子组件传值， 父给子传值需要父组件得到子组件的实例，通过实例去拿到相应属性和方法				 
 
 
