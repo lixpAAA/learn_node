@@ -48,7 +48,9 @@
 20.   安装react-cli
       1. npm i -g create-react-app 
       2. create-react-app my-app
-21.  使用nextjs  ： 1. npm install --save react react-dom next	  
+21.  使用nextjs  ： 1. npm install --save react react-dom next
+
+22.  生命周期 
 	  
 
 

@@ -1,0 +1,27 @@
+## 笔记
+### !DOCTYPE的作用：
+    1. 告诉浏览器按照什么规范来解析文档， 如果不指定，浏览器将按照自己的标准规范来解析文档
+
+### html5新特性：
+    1. 新增标签：（更具语义化）方便网络爬虫，利于seo
+		   1. header（头部）、	nav（导航）、 section（章节）、 aside（侧边）、 article（文章） 、footer（底部）	
+			 2. 这些实质上都类似于div， 只不过更具语义化而已
+		2. 新增表单类型：
+		   1. type=“email 、 url、 date、 number、 range、 search、 color”	 
+			 2. placeholder、 autofouce、 autocomplete（提交一次后，下次自动补全）、 multiple（文件多选）
+		3. 绘图canvas、 多媒体（video、audio）
+		4. web数据存储：
+		   1. sessionStorage: 作用于当前会话，同一窗口下数据共享，即当前标签页窗口关闭后失效
+			 2. localStorage：永久生效，除非手动删除，可多窗口共享
+		5. 拖放功能
+		6. history：
+		   1. 常见API： back, forward, go
+			 2. 方法：    pushState(state, title, url)  创建新的纪录,,  不用刷新页面而使地址栏发生改变
+			              replaceState  
+			 3. 监听函数	onopstate： window.onopstate = funnction(event){} // 前提是已经调用了pushState replaceState 函数
+		7. 地理信息：navigator.geolocation
+		   1. 常见API：navigator.geolocation.getCurrentPosition(success, error, options)       
+### 跨文档通信
+    1. postMessage(message, origin, [transfer]) // 参数说明：origin指定框架中文档来源的域
+		例如： 在父页面利用iframe.postMessage('123', 'file:///test.html')发送数据出去， 然后在子页面利用window.addEventListener('message', funnction(){}) 进行数据监听
+		注意： 可能会受到浏览器安全策略的限制			 
